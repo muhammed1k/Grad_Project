@@ -7,9 +7,7 @@ var router = express.Router();
 
 //signup
 
-
-
-    router.post("/signup", function (req, res, next) {
+    router.post("/signup", function (req, res) {
       var username = req.body.username;
       var email = req.body.email;
       var password = req.body.password;
@@ -27,18 +25,24 @@ var router = express.Router();
             email: email
          });
    
-         newUser.save(next);
+         newUser.save()
+         .then(data => {
+            res.json(data)
+           })
+           .catch(error =>{
+            res.json(error)
+           })
    
       });
    
-   }, passport.authenticate("login", {
-      successRedirect: "/",
-      failureRedirect: "/signup",
-      failureFlash: true
+   },passport.authenticate("login", {
+      //successRedirect: "/",
+      //failureRedirect: "/signup",
+      //failureFlash: true
    }));
 
 // logout 
-
+/*
 router.get('/logout', function(req, res, next) {
    req.logout(function(err) {
      if (err) { return next(err); }
@@ -52,6 +56,6 @@ router.post("/login", passport.authenticate("login", {
    failureRedirect: "/login",
    failureFlash: true
 }));
-
+*/
  
  module.exports = router;
