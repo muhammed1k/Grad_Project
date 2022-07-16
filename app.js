@@ -7,7 +7,6 @@ var passport = require("passport");
 var session = require("express-session");
 var flash = require("connect-flash");
 var bodyParser = require("body-parser");
-var setUpPassport = require("./setuppassport");
 var dotenv = require("dotenv");
 const cors = require("cors");
 const routesUrls = require('./routes/routes')
@@ -16,23 +15,29 @@ const routesUrls = require('./routes/routes')
 var app = express();
 dotenv.config()
 mongoose.connect(process.env.DATABASECONNECTION, () => console.log("DB Connected"))
-setUpPassport();
+
 
 
 app.set("port",process.env.PORT || 5000);
 
 
-app.use(cookieParser());
+app.use(cookieParser("secretcode"));
 app.use(session({
-    secret:"dsakdhiwq41312sdad",
+    secret:"secretcode",
     resave:false,
     saveUninitialized:false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+require("./setuppassport")(passport);
 app.use(flash());
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+      origin: "http://localhost:3000", // <-- location of the react app were connecting to
+      credentials: true,
+    })
+  );
 
 
 app.use('/api',routesUrls)

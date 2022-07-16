@@ -41,21 +41,33 @@ var router = express.Router();
       //failureFlash: true
    }));
 
+
+   router.post("/login", (req, res, next) => {
+      passport.authenticate("local", (err, user, info) => {
+        if (err) throw err;
+        if (!user) res.send("No User Exists");
+        else {
+          req.logIn(user, (err) => {
+            if (err) throw err;
+            res.send("Successfully Authenticated");
+            console.log(req.user);
+          });
+        }
+      })(req, res, next);
+    });
+
+    router.get("/user", (req, res) => {
+      res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+    });
+
 // logout 
-/*
+
 router.get('/logout', function(req, res, next) {
    req.logout(function(err) {
      if (err) { return next(err); }
-     res.redirect('/');
    });
  });
 
-//login 
-router.post("/login", passport.authenticate("login", {
-   successRedirect: "/",
-   failureRedirect: "/login",
-   failureFlash: true
-}));
-*/
+
  
  module.exports = router;
