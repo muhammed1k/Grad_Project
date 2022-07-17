@@ -4,10 +4,21 @@ var mongoose = require("mongoose");
 const SALT_FACTOR = 10;
 
 var userSchema = mongoose.Schema({
-    username:{type:String, required:true},
+    fullname:{type:String, required:true},
     email:{type:String, required:true, unique:true},
-    password:{type:String, required:false},
-    createdAt:{type:Date, default:Date.now}
+    password:{type:String, required:true},
+    createdAt:{type:Date, default:Date.now},
+    phone:{type:String, required:true},
+    address:{type:String, required:false},
+    totalride:{type:String, required:false},
+    asdriver:{type:String, required:false},
+    aspassnager:{type:String, required:false},
+    rate:{type:String, required:false},
+    brand:{type:String, required:false},
+    model:{type:String, required:false},
+    color:{type:String, required:false},
+    facebook:{type:String, required:false},
+    profileimg:{type:String, required:false},
 });
 
 userSchema.pre("save", function(done){

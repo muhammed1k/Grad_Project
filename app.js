@@ -8,6 +8,7 @@ var session = require("express-session");
 var flash = require("connect-flash");
 var bodyParser = require("body-parser");
 var dotenv = require("dotenv");
+var morgan = require("morgan");
 const cors = require("cors");
 const routesUrls = require('./routes/routes')
 
@@ -39,6 +40,8 @@ app.use(
     })
   );
 
+app.use(morgan('dev'));
+app.use("/uploads",express.static(path.resolve(__dirname,'uploads')));
 
 app.use('/api',routesUrls)
 
