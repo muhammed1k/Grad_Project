@@ -18,6 +18,7 @@ var userSchema = mongoose.Schema({
     created:{type:Date, required:true},
     distance:{type:String, required:true},
     duration:{type:String, required:true},
+    joinedusers:{type:Array,required:false},
     
 });
 

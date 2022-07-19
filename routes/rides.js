@@ -21,13 +21,28 @@ router.get("/search_rides", async (req, res) => {
     try {
 
         
-      const ride = await Ride.findOne({from:req.body.from,to:req.body.to});
+      const ride = await Ride.findOne({from:req.body.from,to:req.body.to})
+      .where('date').equals(req.body.date)
       
       res.status(200).json(ride);
     } catch (err) {
       res.status(500).json(err);
     }
   });
+
+
+router.post("/join_ride", async(req,res) => {
+  try {
+
+    const ride = await Ride.findOne({userid:req.body.driverid})
+    
+    joinedusers.push(req.body.riderid)
+    
+    res.status(200).json(ride);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 
 module.exports = router;

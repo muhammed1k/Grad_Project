@@ -6,7 +6,7 @@ var router = express.Router();
 
 router.get("/userinfo", async (req, res) => {  
     try {
-      const user = await User.findOne({ userid: req.body.userid });
+      const user = await User.findOne({ _id: req.body.userid });
       
       res.status(200).json(user);
     } catch (err) {
