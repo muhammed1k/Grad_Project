@@ -10,7 +10,9 @@ var bodyParser = require("body-parser");
 var dotenv = require("dotenv");
 var morgan = require("morgan");
 const cors = require("cors");
-const routesUrls = require('./routes/routes')
+const routesAuth = require('./routes/auth')
+const ridesAuth = require('./routes/rides')
+const usersinfo = require('./routes/users')
 
 //inits
 var app = express();
@@ -43,7 +45,9 @@ app.use(
 app.use(morgan('dev'));
 app.use("/uploads",express.static(path.resolve(__dirname,'uploads')));
 
-app.use('/api',routesUrls)
+app.use('/api/auth',routesAuth)
+app.use('/api/rides',ridesAuth)
+app.use('/api/users/',usersinfo)
 
 
 app.listen(app.get("port"),function()
