@@ -10,7 +10,7 @@ var userSchema = mongoose.Schema({
     air_condition:{type:String, default:Date.now},
     smoking:{type:String, required:true},
     pet:{type:String, required:true},
-    seats:{type:String, required:true},
+    seats:{type:Number, required:true},
     payment:{type:String, required:true},
     fare:{type:String, required:true},
     date:{type:Date, required:true},

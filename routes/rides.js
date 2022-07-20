@@ -22,22 +22,24 @@ router.get("/search_rides", async (req, res) => {
 
         
       const ride = await Ride.findOne({from:req.body.from,to:req.body.to})
-      .where('date').equals(req.body.date)
+      .where('seats').gte(req.body.availbleSeats).where('date').gte(req.body.date)
       
       res.status(200).json(ride);
+      
     } catch (err) {
       res.status(500).json(err);
     }
   });
 
 
-router.post("/join_ride", async(req,res) => {
+router.put("/join_ride", async(req,res) => {
   try {
 
-    const ride = await Ride.findOne({userid:req.body.driverid})
-    
-    joinedusers.push(req.body.riderid)
-    
+    const ride = await Ride.findOneAndUpdate({userid:req.body.driverid,_id:req.body.rideid},
+      { $push: { joinedusers :  req.body.riderid } }, {new:true})
+    ride.seats -= 1           
+
+    ride.save()
     res.status(200).json(ride);
   } catch (err) {
     res.status(500).json(err);
