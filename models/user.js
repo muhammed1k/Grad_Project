@@ -19,6 +19,7 @@ var userSchema = mongoose.Schema({
     color:{type:String, required:false},
     facebook:{type:String, required:false},
     profileimg:{type:String, required:false},
+    riders: { type: mongoose.Schema.Types.ObjectId, ref: 'Rides'}
 });
 
 userSchema.pre("save", function(done){

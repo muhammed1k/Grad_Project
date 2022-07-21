@@ -4,9 +4,9 @@ var User = require("../models/user");
 
 var router = express.Router();
 
-router.get("/userinfo", async (req, res) => {  
+router.get("/userinfo/:userid", async (req, res) => {  
     try {
-      const user = await User.findOne({ _id: req.body.userid });
+      const user = await User.findOne({ _id: req.params.userid });
       
       res.status(200).json(user);
     } catch (err) {
@@ -16,3 +16,8 @@ router.get("/userinfo", async (req, res) => {
 
 
 module.exports = router;
+
+from:"tanta"
+to
+:
+"menouf"

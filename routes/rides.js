@@ -1,6 +1,7 @@
 var express = require("express");
 
 var Ride = require("../models/rides");
+var User = require("../models/user");
 
 var router = express.Router();
 
@@ -20,12 +21,14 @@ router.post("/offer_ride", async (req, res) => {
 router.get("/search_rides", async (req, res) => {
     try {
 
-        
-      const ride = await Ride.findOne({from:req.body.from,to:req.body.to})
-      .where('seats').gte(req.body.availbleSeats).where('date').gte(req.body.date)
-      
+        console.log(req.body)
+      const ride = await Ride.find({from:req.query.from,to:req.query.to})
+      .where('seats').gte(req.query.availbleSeats).where('date').gte(req.query.date)
+      .populate({path:'userid',model:'User'})
+
+      //const user = await User.findOne({_id:ride[0].userid})
       res.status(200).json(ride);
-      
+      //res.status(200).json({user,ride});
     } catch (err) {
       res.status(500).json(err);
     }

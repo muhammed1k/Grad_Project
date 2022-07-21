@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 
 
 var userSchema = mongoose.Schema({
-    userid:{type:String,required:true},
+    
     from:{type:String, required:true},
     to:{type:String, required:true},
     gender:{type:String, required:true},
@@ -19,6 +19,7 @@ var userSchema = mongoose.Schema({
     distance:{type:String, required:true},
     duration:{type:String, required:true},
     joinedusers:{type:Array,required:false},
+    userid: { type: mongoose.Schema.Types.ObjectId, ref: 'users'}
     
 });
 
