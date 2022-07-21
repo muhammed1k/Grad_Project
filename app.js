@@ -13,6 +13,7 @@ const cors = require("cors");
 const routesAuth = require('./routes/auth')
 const ridesAuth = require('./routes/rides')
 const usersinfo = require('./routes/users')
+const notifyinfo = require('./routes/notify')
 
 //inits
 var app = express();
@@ -48,6 +49,7 @@ app.use("/uploads",express.static(path.resolve(__dirname,'uploads')));
 app.use('/api/auth',routesAuth)
 app.use('/api/rides',ridesAuth)
 app.use('/api/users/',usersinfo)
+app.use('/api/notify/',notifyinfo)
 
 
 app.listen(app.get("port"),function()

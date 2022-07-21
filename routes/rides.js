@@ -41,13 +41,16 @@ router.put("/join_ride", async(req,res) => {
     const ride = await Ride.findOneAndUpdate({userid:req.body.driverid,_id:req.body.rideid},
       { $push: { joinedusers :  req.body.riderid } }, {new:true})
     ride.seats -= 1           
-
+    
     ride.save()
     res.status(200).json(ride);
   } catch (err) {
     res.status(500).json(err);
   }
 })
+
+
+
 
 
 module.exports = router;
