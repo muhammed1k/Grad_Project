@@ -26,7 +26,7 @@ router.post("/notify_driver", async(req,res) => {
   })
   
 router.get("/get_notify", async(req,res) => {
-    const notify = await Notify.find({driverid:req.body.driverid})
+    const notify = await Notify.find({driverid:req.query.driverid})
     .populate({path:'driverid',model:'User'})
     .populate({path:'riderid',model:'User'})
     res.status(200).json(notify);
