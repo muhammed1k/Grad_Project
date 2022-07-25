@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
     email:{type:String, required:true, unique:true},
     password:{type:String, required:true},
     createdAt:{type:Date, default:Date.now},
-    phone:{type:String, required:true},
+    phone:{type:String, required:false},
     address:{type:String, required:false},
     totalride:{type:String, required:false},
     asdriver:{type:String, required:false},

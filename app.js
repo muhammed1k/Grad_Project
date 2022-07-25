@@ -8,7 +8,9 @@ var session = require("express-session");
 var flash = require("connect-flash");
 var bodyParser = require("body-parser");
 var dotenv = require("dotenv");
+const multer = require("multer");
 var morgan = require("morgan");
+const helmet = require("helmet");
 const cors = require("cors");
 const routesAuth = require('./routes/auth')
 const ridesAuth = require('./routes/rides')
@@ -42,9 +44,27 @@ app.use(
       credentials: true,
     })
   );
+app.use(helmet());
+app.use(morgan("common"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads/imgs")));
 
-app.use(morgan('dev'));
-app.use("/uploads",express.static(path.resolve(__dirname,'uploads')));
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/imgs");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 app.use('/api/auth',routesAuth)
 app.use('/api/rides',ridesAuth)

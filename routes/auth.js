@@ -110,44 +110,22 @@ router.get('/logout', function(req, res, next) {
  var upload = multer({storage:storage});
 
 
-  router.post("/edit_profile",upload.single(), async function(req,res){
-    User.findOne({ email: req.body.email }, function (err, user) {
+  router.post("/edit_profile", async function(req,res){
+    User.findOne({ _id: req.body.userId}, function (err, user) {
       if (err) { return next(err); }
-      user.profileimg = req.file.path
-      user.fullname = req.body.fullname
-      user.phone = req.body.phone
-      user.email = req.body.email
-      user.address = req.body.address
-      user.facebook = req.body.facebook
-      /*bcrypt.compare(req.body.oldpassword, user.password, (err, result) => {
-        if (err) throw err;
-        if (result === true) {
-          console.log("Pass Match")
-          bcrypt.genSalt(10, function(err,salt){
-            if(err){return done(err);}
-            bcrypt.hash(req.body.newpassword, salt, function(err, hashedPassword){
-                if(err) {return done(err);}
-                console.log(hashedPassword)
-                user.password = hashedPassword;
-                
-            });
-        });
-        } else {
-          return done(null, false);
-        }})
-        console.log(user.password)*/
+      const edit = new User(req.body);
 
-      user.save()
-    
-      .then(data => {
-         res.json({data,"msg":"User Saved"})
-        })
-        .catch(error =>{
-         res.json(errors)
-        })
+      try {
+        const savededit = edit.save();
+        res.status(200).json(savededit);
+      } catch (err) {
+        res.status(500).json(err);
+      }
         
     });
 
 });
+
+
  
  module.exports = router;

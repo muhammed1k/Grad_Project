@@ -16,8 +16,3 @@ router.get("/userinfo/:userid", async (req, res) => {
 
 
 module.exports = router;
-
-from:"tanta"
-to
-:
-"menouf"

@@ -7,11 +7,13 @@ router.post("/notify_driver", async(req,res) => {
     const driver = req.body.driverid
     const rider = req.body.riderid
     const msg = req.body.msg
+    const rideid = req.body.rideid
     var newNotifaction = new Notify({
         driverid:driver,
         riderid:rider,
-        notifaction:msg
-    })
+        notifaction:msg,
+        rideid:rideid
+        })
     
    
     newNotifaction.save()
